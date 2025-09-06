@@ -20,6 +20,8 @@ updn -config https://example.com/config.json
 
 ## Configuration
 
+The configuration only needs to be available when the process starts. If you change the config, you need to restart the process.
+
 ### Throttling
 
 There are two throttling levers you can pull to make sure you don't DDoS yourself with UpDn. There is a pause between individual checks, and then a longer pause between runs.
