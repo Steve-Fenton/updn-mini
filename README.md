@@ -46,7 +46,7 @@ Example configuration:
 
 - `type`: Always `certificate`
 - `url`: The url of the website, such as `https://example.com`
-- `minDaysRemaining`: The minimum time left on the certificate in days, such as `30`
+- `minDaysRemaining` (optional, default `30`): The minimum time left on the certificate in days, such as `30`
 
 ```json
 {
