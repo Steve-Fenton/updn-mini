@@ -6,15 +6,11 @@
     },
     "checks": [
         {
-            "type": "uptime",
-            "url": "https://example.com"
-        },
-        {
-            "type": "uptime",
+            "type": ["uptime"],
             "url": "https://example.org"
         },
         {
-            "type": "certificate",
+            "type": ["certificate", "uptime"],
             "url": "https://example.com",
             "minDaysRemaining": 30
         }

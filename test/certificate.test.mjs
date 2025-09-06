@@ -2,8 +2,8 @@ import { getCertificateDaysRemaining } from '../src/certificate.mjs';
 
 describe('Certificate Tests', () => {
     test('Gets days remaining', async () => {
-        const days = await getCertificateDaysRemaining('https://example.com');
-        expect(typeof days).toBe('number');
-        expect(days).toBeGreaterThan(1);
+        const cert = await getCertificateDaysRemaining('https://example.com');
+        expect(typeof cert.days).toBe('number');
+        expect(cert.days).toBeGreaterThan(1);
     });
 });

@@ -12,9 +12,8 @@ function reportResult(result, message) {
     }
 }
 
-
 async function checkCertificates(config, delay) {
-    const certificateChecks = config.checks.filter(c => c.type === 'certificate');
+    const certificateChecks = config.checks.filter(c => c.type.includes('certificate'));
     if (certificateChecks.length === 0) {
         return;
     }
@@ -24,7 +23,7 @@ async function checkCertificates(config, delay) {
     for (let check of certificateChecks) {
         const cert = await getCertificateDaysRemaining(check.url);
         const result = cert.days >= (check.threshold || 30);
-        const message = `🔒 Certificate', ${check.url} ${cert.issuer.O} ${cert.days}d`;
+        const message = `🔒 Certificate ${check.url} ${cert.issuer.O} ${cert.days}d`;
 
        reportResult(result, message);
 
@@ -35,7 +34,7 @@ async function checkCertificates(config, delay) {
 }
 
 async function checkUptime(config, delay) {
-    const uptimeChecks = config.checks.filter(c => c.type === 'uptime');
+    const uptimeChecks = config.checks.filter(c => c.type.includes('uptime'));
     if (uptimeChecks.length === 0) {
         return;
     }
@@ -45,7 +44,7 @@ async function checkUptime(config, delay) {
     for (let check of uptimeChecks) {
         const response = await checkUrlHealth(check.url);
         const result = response.status === 'up';
-        const message = `🌏 Uptime', ${check.url} ${response.statusCode}:${response.statusText}`;
+        const message = `🌏 Uptime ${check.url} ${response.statusCode}:${response.statusText}`;
 
         reportResult(result, message);
 

@@ -56,7 +56,7 @@ Example configuration:
 {
     "checks": [
         {
-            "type": "certificate",
+            "type": ["certificate"],
             "url": "https://example.com",
             "minDaysRemaining": 30
         }
@@ -73,7 +73,22 @@ Example configuration:
 {
     "checks": [
         {
-            "type": "uptime",
+            "type": ["uptime"],
+            "url": "https://example.com"
+        }
+    ]
+}
+```
+
+### Combined checks
+
+You can combine check types by specifying them all in the `type` configuration.
+
+```json
+{
+    "checks": [
+        {
+            "type": ["certificate", "uptime"],
             "url": "https://example.com"
         }
     ]
