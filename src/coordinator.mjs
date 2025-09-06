@@ -22,9 +22,9 @@ async function checkCertificates(config, delay) {
     await sleep(delay || 0);
 
     for (let check of certificateChecks) {
-        const days = await getCertificateDaysRemaining('https://example.com');
-        const result = days >= (check.threshold || 30);
-        const message = `🔒 Certificate', ${check.url} ${days}d`;
+        const cert = await getCertificateDaysRemaining(check.url);
+        const result = cert.days >= (check.threshold || 30);
+        const message = `🔒 Certificate', ${check.url} ${cert.issuer.O} ${cert.days}d`;
 
        reportResult(result, message);
 
@@ -45,7 +45,7 @@ async function checkUptime(config, delay) {
     for (let check of uptimeChecks) {
         const response = await checkUrlHealth(check.url);
         const result = response.status === 'up';
-        const message = `🌏 Uptime', ${check.url} ${response.statusCode}:${response.statusText} (${response.status})`;
+        const message = `🌏 Uptime', ${check.url} ${response.statusCode}:${response.statusText}`;
 
         reportResult(result, message);
 
