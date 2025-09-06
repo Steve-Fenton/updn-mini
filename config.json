@@ -1,0 +1,22 @@
+{
+    "delay": 1000,
+    "delayAfter": {
+        "uptime": 60000,
+        "certificate": 28800000
+    },
+    "checks": [
+        {
+            "type": "uptime",
+            "url": "https://example.com"
+        },
+        {
+            "type": "uptime",
+            "url": "https://example.org"
+        },
+        {
+            "type": "certificate",
+            "url": "https://example.com",
+            "minDaysRemaining": 30
+        }
+    ]
+}

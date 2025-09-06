@@ -1,0 +1,22 @@
+{
+    "name": "updn",
+    "version": "1.0.0",
+    "description": "A CLI tool that loads a list of checks and keeps and eye on them.",
+    "main": "src/app.mjs",
+      "bin": {
+    "updn": "./src/app.mjs"
+  },
+    "scripts": {
+      "spellcheck": "cspell '**/*.{js,mjs,json,md}'",
+      "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    },
+    "keywords": ["cli", "config", "tool"],
+    "author": "Steve Fenton",
+    "license": "GPL-3.0",
+    "dependencies": {
+    },
+    "devDependencies": {
+      "cspell": "^6.28.0",
+      "jest": "^30.1.3"
+    }
+}

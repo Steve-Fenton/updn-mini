@@ -1,0 +1,27 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "Fenton",
+        "updn"
+    ],
+    "ignorePaths": [
+        "node_modules",
+        "coverage",
+        "dist",
+        "build",
+        "**/*.min.*",
+        "**/package-lock.json",
+        "**/yarn.lock"
+    ],
+    "dictionaries": [
+        "node",
+        "softwareTerms"
+    ],
+    "enableFiletypes": [
+        "js",
+        "mjs",
+        "json",
+        "md"
+    ]
+}
