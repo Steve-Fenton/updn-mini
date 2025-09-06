@@ -31,7 +31,16 @@ function parseArgs(args) {
  */
 async function loadConfigFromFile(filePath) {
   try {
-    const data = await fs.readFile(filePath, 'utf8');
+    let data;
+    if (/^https?:\/\//.test(filePath)) {
+      const res = await fetch(filePath);
+      if (!res.ok) {
+      throw new Error(`Failed to fetch config from URL: ${filePath} (${res.status})`);
+      }
+      data = await res.text();
+    } else {
+      data = await fs.readFile(filePath, 'utf8');
+    }
     return JSON.parse(data);
   } catch (error) {
     if (error.code === 'ENOENT') {

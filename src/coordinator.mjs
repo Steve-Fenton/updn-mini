@@ -1,7 +1,17 @@
 import { getCertificateDaysRemaining } from './certificate.mjs';
 import { checkUrlHealth } from './uptime.mjs';
+import util from 'util';
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function reportResult(result, message) {
+    if (result) {
+        console.error(util.styleText('green', message));
+    } else {
+        console.error(util.styleText('red', message));
+    }
+}
+
 
 async function checkCertificates(config, delay) {
     const certificateChecks = config.checks.filter(c => c.type === 'certificate');
@@ -16,11 +26,7 @@ async function checkCertificates(config, delay) {
         const result = days >= (check.threshold || 30);
         const message = `🔒 Certificate', ${check.url} ${days}d`;
 
-        if (result) {
-            console.log(message);
-        } else {
-            console.error(message);
-        }
+       reportResult(result, message);
 
         await sleep(config.delay || 1000);
     }
@@ -39,13 +45,9 @@ async function checkUptime(config, delay) {
     for (let check of uptimeChecks) {
         const response = await checkUrlHealth(check.url);
         const result = response.status === 'up';
-        const message = `🌏 Uptime', ${check.url} ${response.statusCode}:${response.statusText}`;
+        const message = `🌏 Uptime', ${check.url} ${response.statusCode}:${response.statusText} (${response.status})`;
 
-        if (result) {
-            console.log(message);
-        } else {
-            console.error(message);
-        }
+        reportResult(result, message);
 
         await sleep(config.delay || 1000);
     }

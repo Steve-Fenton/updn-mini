@@ -1,6 +1,8 @@
 # UpDn Mini
 
-Local version of UpDn.
+![UpDn](updn.png)
+
+A Node.js CLI that runs uptime and certificate checks.
 
 ## Quick start
 

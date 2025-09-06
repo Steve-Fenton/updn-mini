@@ -10,12 +10,8 @@ import http from 'http';
  * @param {number} options.maxRedirects - Maximum number of redirects to follow (default: 5).
  * @returns {Promise<Object>} - Object containing status, responseTime, statusCode, and statusText.
  */
-async function checkUrlHealth(targetUrl, options = {}) {
-    const {
-        timeout = 10000,
-        followRedirects = false,
-        maxRedirects = 5
-    } = options;
+async function checkUrlHealth(targetUrl) {
+    const timeout = 10000;
 
     return new Promise((resolve, reject) => {
         try {
@@ -36,44 +32,12 @@ async function checkUrlHealth(targetUrl, options = {}) {
                     method: 'GET',
                     timeout: timeout,
                     headers: {
-                        'User-Agent': 'URL-Health-Checker/1.0'
+                        'User-Agent': 'UpDn-Mini/1.0'
                     }
                 };
 
                 const req = client.request(requestOptions, (res) => {
                     const responseTime = Date.now() - startTime;
-                    
-                    // Handle redirects
-                    if (followRedirects && [301, 302, 303, 307, 308].includes(res.statusCode)) {
-                        if (redirectCount >= maxRedirects) {
-                            return resolve({
-                                status: 'error',
-                                responseTime,
-                                statusCode: res.statusCode,
-                                statusText: 'Too many redirects',
-                                error: `Maximum redirects (${maxRedirects}) exceeded`
-                            });
-                        }
-                        
-                        const location = res.headers.location;
-                        if (!location) {
-                            return resolve({
-                                status: 'error',
-                                responseTime,
-                                statusCode: res.statusCode,
-                                statusText: 'Redirect without location header',
-                                error: 'Redirect response missing location header'
-                            });
-                        }
-                        
-                        redirectCount++;
-                        // Handle relative redirects
-                        const redirectUrl = location.startsWith('http') 
-                            ? location 
-                            : new URL(location, url).href;
-                        
-                        return makeRequest(redirectUrl);
-                    }
                     
                     // Determine status based on HTTP status code
                     const isSuccess = res.statusCode >= 200 && res.statusCode < 300;
