@@ -23,12 +23,12 @@ export class Reporter {
     async certificate(url, daysRemaining, health) {
         const module = await this.getModule();
 
-        return module && await module.reportCertificate(url, daysRemaining, health);
+        module && await module.reportCertificate(url, daysRemaining, health);
     }
 
     async uptime(url, responseTime, health) {
         const module = await this.getModule();
 
-        return module && await module.reportUptime(url, responseTime, health);
+        module && await module.reportUptime(url, responseTime, health);
     }
 }
