@@ -60,6 +60,9 @@ export class Monitor {
 
             Monitor.reportResult(result, message);
 
+            const health = result ? 'healthy' : (response.statusCode < 400 ? 'warning' : 'critical');
+            await this.reporter.uptime(check.url, response.responseTime, health);
+
             await Monitor.sleep(this.config.delay || 1000);
         }
 

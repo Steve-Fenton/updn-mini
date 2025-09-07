@@ -5,9 +5,9 @@ export class Reporter {
         this.moduleCache = new Map();
     }
 
-    async certificate(url, daysRemaining, health) {
+    async getModule() {
         if (this.adapter == null) {
-            return;
+            return null;
         }
 
         let module = this.moduleCache.get(this.adapter);
@@ -17,6 +17,18 @@ export class Reporter {
             this.moduleCache.set(this.adapter, module);
         }
 
-        return await module.reportCertificate(url, daysRemaining, health);
+        return module;
+    }
+
+    async certificate(url, daysRemaining, health) {
+        const module = await this.getModule();
+
+        return module && await module.reportCertificate(url, daysRemaining, health);
+    }
+
+    async uptime(url, responseTime, health) {
+        const module = await this.getModule();
+
+        return module && await module.reportUptime(url, responseTime, health);
     }
 }

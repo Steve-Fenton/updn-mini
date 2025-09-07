@@ -62,4 +62,32 @@ function reportCertificate(url, daysRemaining, health) {
     }
 }
 
-export { reportCertificate }
+/**
+ * 
+ * @param {string} url 
+ * @param {number} responseTime 
+ * @param {'healthy' | 'warning' | 'critical'} health 
+ */
+function reportUptime(url, responseTime, health) {
+    if (!isDataDogEnabled || !StatsD) {
+      return;
+    }
+
+    const tags = [
+        `domain:${url}`,
+        `uptime_status:${health}`
+    ]
+
+    // Stats
+    StatsD.gauge('updn.uptime.response_time', responseTime, tags)
+    
+    // Event
+    if (['warning', 'critical'].includes(health)) {
+        StatsD.event(
+            'Uptime Issue Detected', 
+            `The website ${url} has problems ${responseTime} ms`, 
+            { alert_type: health, tags })
+    }
+}
+
+export { reportCertificate, reportUptime }
