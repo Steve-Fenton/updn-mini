@@ -1,4 +1,5 @@
 {
+    "reporter": "datadog",
     "delay": 1000,
     "delayAfter": {
         "uptime": 60000,

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { promises as fs } from 'fs';
-import { checkCertificates, checkUptime } from './coordinator.mjs';
+import { Monitor } from './monitor.mjs';
 
 /**
  * Parse command line arguments
@@ -60,11 +60,12 @@ async function main() {
     
     if (args.config) {
       const config = await loadConfigFromFile(args.config);
+      const monitor = new Monitor(config);
 
-    await Promise.all([
-      checkCertificates(config),
-      checkUptime(config)
-    ]);
+      await Promise.all([
+        monitor.checkCertificates(config),
+        monitor.checkUptime(config)
+      ]);
 
     } else {
       console.log('No config file specified');

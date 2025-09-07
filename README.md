@@ -95,6 +95,25 @@ You can combine check types by specifying them all in the `type` configuration.
 }
 ```
 
+## Reporters
+
+### Datadog
+
+Before starting UpDn, you can set up environment variables for your Datadog configuration.
+
+```bash
+export DD_API_KEY="your-api-key-here"
+export DD_SITE="datadoghq.com"  # or datadoghq.eu, us3.datadoghq.com, etc.
+```
+
+You can then pass `"datadog"` as the reporter in your JSON configuration.
+
+```json
+{
+    "reporter": "datadog"
+}
+```
+
 ## Local testing
 
 Set up using the following command (you may need to `sudo`)
